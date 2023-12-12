@@ -14,7 +14,6 @@
 
 #include "neopixel.h"
 #include "as5600.h"
-#include "ir_sensor.h"
 #include "tmcuart.h"
 #include "i2c_target.h"
 
@@ -119,7 +118,7 @@ void update_loop()
     if((now - last_update) * 1000 / CLOCKS_PER_SEC > UPDATE_INTERVAL_MS) {
         note_last_updated_time();
 
-        state.filament_present = ir_sensor_value();
+        state.filament_present = 1;
 
         if(!update_magnet_state()) {
             printf("Update magnet state failed...\n");
@@ -177,7 +176,6 @@ int main() {
     note_last_updated_time();
 
     as5600_init();
-    ir_sensor_init();
 
 #if defined(IS_I2C_TARGET) && IS_I2C_TARGET
     i2c_target_init();
